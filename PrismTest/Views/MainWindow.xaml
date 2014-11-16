@@ -1,0 +1,46 @@
+﻿<Window x:Class="PrismTest.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:b="clr-namespace:PrismTest.Behaviors"
+        xmlns:v="clr-namespace:PrismTest.Views"
+        xmlns:prism="http://www.codeplex.com/prism"
+        Title="MainWindow" Height="350" Width="525">
+    
+    <i:Interaction.Triggers>
+        <prism:InteractionRequestTrigger SourceObject="{Binding TestRequest}">
+            <b:DebugAction/>
+        </prism:InteractionRequestTrigger>
+    </i:Interaction.Triggers>
+    
+    <Grid>
+        <StackPanel Orientation="Vertical">
+
+            <ComboBox ItemsSource="{Binding Context.CategoryNameArray, Mode=OneWay}"
+                      SelectedIndex="{Binding Context.CurrentCategoryIndex}"/>
+            <ComboBox ItemsSource="{Binding Context.ItemArray, Mode=OneWay}"
+                      SelectedIndex="{Binding Context.CurrentItemIndex}"/>
+            
+            <Label Content="{Binding Context.CurrentItemContent}"/>
+            
+            <Button Content="hoge">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <b:ShowWindowAction Type="{x:Type v:SubWindow}"
+                                            DataContext="{Binding SubWindowViewModel}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+
+            <Button Content="aaa">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <b:InvokeMethodAction InstanceObj="{Binding}"
+                                              MethodName="RaiseTestRequest"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+
+        </StackPanel>
+    </Grid>
+</Window>
